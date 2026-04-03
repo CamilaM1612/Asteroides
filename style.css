@@ -1,4 +1,7 @@
 body{
     background-color: black;
+    background-image: url("imagenes/fondo-estrellado.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     margin: 0;
 }
