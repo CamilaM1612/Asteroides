@@ -1,0 +1,48 @@
+<html>
+<body>
+//codigo para mover la nave
+
+<input type="text" onkeydown="myFunction()">
+
+<script>
+function myFunction() {
+   document.addEventListener('keydown', (e) => {
+   	if (e.key=='w')
+    {
+    	moveUp();
+    } else {
+    	if (e.key == 's'){
+        	moveDown();
+        } else {
+        	if (e.key == 'a'){
+            	moveLeft();
+            	} else {
+            		if (e.key == 'd'){
+                		moveRight();
+                   	 }
+            }
+        }
+    }
+   });
+}
+
+function moveUp() {
+	alert("You pressed w");
+}
+
+function moveDown() {
+	alert("You pressed s");
+}
+
+function moveLeft() {
+	alert("You pressed a");
+}
+
+function moveRight() {
+	alert("You pressed d");
+}
+
+</script>
+
+</body>
+</html>

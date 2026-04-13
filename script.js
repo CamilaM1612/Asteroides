@@ -1,22 +1,22 @@
 const canvas = document.getElementById("juego");
-const nave = canvas.getContext("2d");
+const ctx = canvas.getContext("2d");
 
-//lienzo
+// lienzo
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const x = canvas.width / 2 - 50/2;
-const y = canvas.height /2 - 50/2;
+const x = canvas.width / 2;
+const y = canvas.height / 2;
 
-//redondo
-nave.strokeStyle = "white";
-nave.lineWidth = 2;
-nave.beginPath();
-nave.arc(95, 50, 40, 0, 2 * Math.PI);
-nave.stroke();
+// crear imagen
+const naveImg = new Image();
+naveImg.src = "imagenes/Nave.png";
 
-//cuadrado
-nave.fillStyle = "white"
-nave.font = "50px Arial";
-nave.fillText("A",x,y);
+naveImg.onload = function () {
+  startGame();
+};
 
+function startGame() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(naveImg, x, y, 60, 60);
+}
