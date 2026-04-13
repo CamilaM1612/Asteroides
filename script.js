@@ -5,19 +5,17 @@ const ctx = canvas.getContext("2d");
 const naveImg = new Image();
 naveImg.src = "imagenes/naveJuego.png";
 
-const miNave = {
-    width: 70,
-    height: 100,
-    x: window.innerWidth / 2 - 70 / 2,
-    y: window.innerHeight / 2 - 100 / 2,
-    speedX: 0,
-    speedY: 0
-};
+var miNave;
 
 naveImg.onload = function () {
-  miAreaJuego.start();
+    miNave = new componente(
+        70,
+        100,
+        window.innerWidth / 2 - 70 / 2,
+        window.innerHeight / 2 - 100 / 2
+    );
+    miAreaJuego.start();
 };
-
 
 var miAreaJuego = {
     canvas: canvas,
@@ -41,6 +39,25 @@ var miAreaJuego = {
     }
 }
 
+function componente(width, height, x, y){
+    this.width = width;
+    this.height = height;
+    this.angle = 0;
+    this.x = x;
+    this.y = y;
+    this.speedX = 0;
+    this.speedY = 0;
+
+    this.actualizar = function (){
+        ctx.drawImage(naveImg, this.x, this.y, this.width, this.height);
+    }
+
+    this.nuevaPosicion = function (){
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+}
+
 function actualizarArea (){
     miAreaJuego.clear();
 
@@ -52,8 +69,8 @@ function actualizarArea (){
     if(miAreaJuego.key == 38){ miNave.speedY = -2;}
     if(miAreaJuego.key == 40){ miNave.speedY = 2;}
     
-    miNave.x += miNave.speedX;
-    miNave.y += miNave.speedY;
+    miNave.nuevaPosicion();
+    // miNave.angle += 1 * Math.PI /180;
 
-    ctx.drawImage(naveImg, miNave.x, miNave.y, miNave.width, miNave.height)
+    miNave.actualizar();
 }
