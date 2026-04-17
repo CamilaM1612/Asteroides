@@ -17,7 +17,7 @@ asteroideGrande.onload = function () {
     150,
     150,
     window.innerWidth / 2 - 150 / 2,
-    window.innerHeight,
+    window.innerHeight * -1 + 400,
   );
 };
 
@@ -79,10 +79,14 @@ function componenteAst(width, height, x, y) {
   this.x = x;
   this.y = y;
   this.speedX = 0;
-  this.speedY = -1;
+  this.speedY = 1;
 
   this.actualizarAst = function () {
-    ctx.drawImage(asteroideGrande, this.x, this.y, this.width, this.height);
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.drawImage(asteroideGrande, this.width / -2, this.height / -2, this.width, this.height);
+    ctx.restore();
   };
 
   this.nuevaPosicionAst = function () {
@@ -112,8 +116,8 @@ function actualizarArea() {
 
   elChocaNaves.nuevaPosicionAst();
   miNave.nuevaPosicion();
-  // miNave.angle += 1 * Math.PI /180;
-
+  
+  elChocaNaves.angle += 1 * Math.PI /180;
   elChocaNaves.actualizarAst();
   miNave.actualizar();
 }
