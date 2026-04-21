@@ -7,7 +7,7 @@ naveImg.src = "imagenes/naveJuego.png";
 
 // crear imagen del Asteroide
 const asteroideGrande = new Image();
-asteroideGrande.src = "imagenes/asteroide.png";
+asteroideGrande.src = "imagenes/sprites.png";
 
 var elChocaNaves;
 var miNave;
@@ -56,15 +56,42 @@ var miAreaJuego = {
 function componente(width, height, x, y) {
   this.width = width;
   this.height = height;
-  this.angle = 0;
   this.x = x;
   this.y = y;
   this.speedX = 0;
   this.speedY = 0;
 
+  this.frameX = 0;     // columna del sprite
+  this.frameY = 0;     // fila (si hay varias animaciones)
+  this.frameWidth = 1024;  // ancho de cada frame en la imagen
+  this.frameHeight = 1024; // alto de cada frame
+  this.totalFrames = 4;  // cantidad de frames
+
   this.actualizar = function () {
-    ctx.drawImage(naveImg, this.x, this.y, this.width, this.height);
+    ctx.drawImage(
+      naveImg,
+      this.frameX * this.frameWidth, // sx
+      this.frameY * this.frameHeight, // sy
+      this.frameWidth,
+      this.frameHeight,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   };
+
+this.contador = 0;
+
+this.animar = function () {
+  this.contador++;
+  if (this.contador % 1 === 0) { // cambia cada 5 frames
+    this.frameX++;
+    if (this.frameX >= this.totalFrames) {
+      this.frameX = 0;
+    }
+  }
+};
 
   this.nuevaPosicion = function () {
     this.x += this.speedX;
@@ -75,19 +102,47 @@ function componente(width, height, x, y) {
 function componenteAst(width, height, x, y) {
   this.width = width;
   this.height = height;
-  this.angle = 0;
+  //this.angle = 0;
   this.x = x;
   this.y = y;
   this.speedX = 0;
   this.speedY = 1;
+  this.contador = 0;
+
+  this.frameX = 0;     // columna del sprite
+  this.frameY = 0;     // fila (si hay varias animaciones)
+  this.frameWidth = 170;  // ancho de cada frame en la imagen
+  this.frameHeight = 165; // alto de cada frame
+  this.totalFrames = 4;  // cantidad de frames
+
 
   this.actualizarAst = function () {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
-    ctx.drawImage(asteroideGrande, this.width / -2, this.height / -2, this.width, this.height);
+    //ctx.save();
+    //ctx.translate(this.width / 2, -this.height / 2);
+    //ctx.rotate(this.angle);
+    ctx.drawImage(
+    asteroideGrande,
+    this.frameX * this.frameWidth,
+    this.frameY * this.frameHeight,
+    this.frameWidth,
+    this.frameHeight,
+    this.x,
+    this.y,
+    this.width,
+    this.height
+    );
     ctx.restore();
   };
+
+  this.animar = function () {
+  this.contador++;
+  if (this.contador % 25 === 0) { // cambia cada 5 frames
+    this.frameX++;
+    if (this.frameX >= this.totalFrames) {
+      this.frameX = 0;
+    }
+  }
+};
 
   this.nuevaPosicionAst = function () {
     this.x += this.speedX;
@@ -116,6 +171,8 @@ function actualizarArea() {
 
   elChocaNaves.nuevaPosicionAst();
   miNave.nuevaPosicion();
+
+  elChocaNaves.animar();
   
   elChocaNaves.angle += 1 * Math.PI /180;
   elChocaNaves.actualizarAst();
